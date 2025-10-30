@@ -1,0 +1,76 @@
+"use client";
+
+import { useState } from "react";
+import { useCart } from "./cart-context";
+
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  image: string;
+}
+
+interface ProductCardProps {
+  product: Product;
+}
+
+export default function ProductCard({ product }: ProductCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setShowNotification(true);
+    setTimeout(() => setShowNotification(false), 2000);
+  };
+
+  return (
+    <div
+      className="product-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl border border-border relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Add to cart notification */}
+      {showNotification && (
+        <div className="absolute top-4 left-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-10 animate-fade-in text-center text-sm font-semibold">
+          Added to cart!
+        </div>
+      )}
+
+      <div className="relative h-64 md:h-72 overflow-hidden bg-neutral">
+        <img
+          src={product.image || "/placeholder.svg"}
+          alt={product.name}
+          className={`w-full h-full object-cover transition-transform duration-500 ${
+            isHovered ? "scale-110" : "scale-100"
+          }`}
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+      </div>
+
+      <div className="p-5 md:p-6">
+        <h3 className="text-lg md:text-xl font-serif font-bold text-foreground mb-2">
+          {product.name}
+        </h3>
+        <p className="text-sm md:text-base text-text-muted mb-4 line-clamp-2">
+          {product.description}
+        </p>
+
+        <div className="flex items-center justify-between">
+          <span className="text-xl md:text-2xl font-bold text-primary">
+            {product.price}
+          </span>
+          <button
+            onClick={handleAddToCart}
+            className="px-4 py-2 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary-light transition-all duration-300 transform hover:scale-105"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
