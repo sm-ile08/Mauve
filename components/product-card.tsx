@@ -18,9 +18,16 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
+
+  const isInCart = cart.some((item) => item.id === product.id);
 
   const handleAddToCart = () => {
+    if (isInCart) {
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 2000);
+      return;
+    }
     addToCart(product);
     setShowNotification(true);
     setTimeout(() => setShowNotification(false), 2000);
@@ -32,10 +39,9 @@ export default function ProductCard({ product }: ProductCardProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Add to cart notification */}
       {showNotification && (
         <div className="absolute top-4 left-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-10 animate-fade-in text-center text-sm font-semibold">
-          Added to cart!
+          {isInCart ? "Already in cart! ✓" : "Added to cart! ✓"}
         </div>
       )}
 
@@ -65,9 +71,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
           <button
             onClick={handleAddToCart}
-            className="px-4 py-2 bg-primary text-white rounded-full text-sm font-semibold hover:bg-primary-light transition-all duration-300 transform hover:scale-105"
+            className={`px-4 py-2 ${
+              isInCart
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-primary hover:bg-primary-light hover:scale-105"
+            } text-white rounded-full text-sm font-semibold transition-all duration-300 transform`}
           >
-            Add to Cart
+            {isInCart ? "In Cart" : "Add to Cart"}
           </button>
         </div>
       </div>

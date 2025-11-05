@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function About() {
   const [isVisible, setIsVisible] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,13 +29,15 @@ export default function About() {
     <section id="about" ref={sectionRef} className="py-16 md:py-24 bg-accent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Image */}
           <div className={`${isVisible ? "animate-fade-in" : "opacity-0"}`}>
             <img
-              src="/luxury-lip-gloss-application-beauty.jpg"
+              src="/logo1.jpg"
               alt="Mauve Beauty"
-              className="w-full rounded-2xl shadow-lg"
               loading="lazy"
+              onLoad={() => setLoaded(true)}
+              className={`w-full rounded-2xl shadow-lg ${
+                loaded ? "loaded" : ""
+              }`}
             />
           </div>
 
@@ -46,7 +49,8 @@ export default function About() {
               Mauve is a Nigerian beauty brand focused on creating soft,
               high-shine lip glosses made with care, quality, and confidence.
               Every gloss is crafted to enhance your natural beauty and make you
-              feel effortlessly luxurious.
+              feel effortlessly luxurious. No individual should feel insecure or
+              left out because of the way they look.
             </p>
             <p className="text-lg text-text-muted mb-8 leading-relaxed">
               We believe that beauty should be accessible, sustainable, and

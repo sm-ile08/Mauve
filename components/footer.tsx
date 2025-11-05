@@ -60,7 +60,7 @@ export default function Footer() {
                   href="mailto:mauvegloss1@gmail.com"
                   className="text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
                 >
-                  <span>mail</span> mauvegloss1@gmail.com
+                  <span>mail:</span> mauvegloss1@gmail.com
                 </a>
               </li>
               <li>
@@ -70,7 +70,17 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
                 >
-                  <span>Tiktok</span> @mauvegloss
+                  <span>Tiktok:</span> @mauvegloss1
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.x.com/@mauvegloss1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-300 hover:text-primary transition-colors flex items-center gap-2"
+                >
+                  <span>X:</span> @mauvegloss1
                 </a>
               </li>
               <li>
@@ -89,7 +99,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-700 pt-8">
           <p className="text-center text-gray-400 text-sm">
-            © {currentYear} Mauve. All Rights Reserved. | Crafted with for gloss
+            © {currentYear} Mauve. All Rights Reserved. | Crafted for gloss
             lovers
           </p>
         </div>
