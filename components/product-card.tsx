@@ -41,7 +41,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       {showNotification && (
         <div className="absolute top-4 left-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-10 animate-fade-in text-center text-sm font-semibold">
-          {isInCart ? "Already in cart! ✓" : "Added to cart! ✓"}
+          {isInCart ? "Already in cart! " : "Added to cart! "}
         </div>
       )}
 

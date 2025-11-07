@@ -31,7 +31,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div className={`${isVisible ? "animate-fade-in" : "opacity-0"}`}>
             <img
-              src="/logo1.jpg"
+              src="/logo2.jpg"
               alt="Mauve Beauty"
               loading="lazy"
               onLoad={() => setLoaded(true)}

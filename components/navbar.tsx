@@ -1,33 +1,41 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
+import { useState } from "react";
+import Link from "next/link";
 
 interface NavbarProps {
-  isScrolled: boolean
+  isScrolled: boolean;
 }
 
 export default function Navbar({ isScrolled }: NavbarProps) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navLinks = [
     { label: "Home", href: "#home" },
     { label: "Products", href: "#products" },
     { label: "About", href: "#about" },
     { label: "Contact", href: "#contact" },
-  ]
+  ];
 
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border" : "bg-transparent"
+        isScrolled
+          ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border"
+          : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
-          {/* Logo */}
           <Link href="#home" className="flex items-center">
-            <span className="text-2xl md:text-3xl font-serif font-bold text-primary">Mauve</span>
+            {/* <span className="text-2xl md:text-3xl font-serif font-bold text-primary">
+              Mauve
+            </span> */}
+            <img
+              src="/logo2.jpg"
+              alt="Mauve"
+              className="h-10 md:h-15 w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -50,9 +58,15 @@ export default function Navbar({ isScrolled }: NavbarProps) {
             aria-label="Toggle menu"
           >
             <span
-              className={`w-6 h-0.5 bg-foreground transition-all ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""}`}
+              className={`w-6 h-0.5 bg-foreground transition-all ${
+                isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
             />
-            <span className={`w-6 h-0.5 bg-foreground transition-all ${isMobileMenuOpen ? "opacity-0" : ""}`} />
+            <span
+              className={`w-6 h-0.5 bg-foreground transition-all ${
+                isMobileMenuOpen ? "opacity-0" : ""
+              }`}
+            />
             <span
               className={`w-6 h-0.5 bg-foreground transition-all ${
                 isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
@@ -78,5 +92,5 @@ export default function Navbar({ isScrolled }: NavbarProps) {
         )}
       </div>
     </nav>
-  )
+  );
 }
