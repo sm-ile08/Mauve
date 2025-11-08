@@ -25,7 +25,7 @@ export default function Cart() {
       message += `• ${item.name} x${item.quantity} - ${item.price}\n`;
     });
 
-    message += `\n Delivery Location: ${location}`;
+    message += `\n📍 Delivery Location: ${location}`;
 
     const whatsappLink = `https://wa.me/2349165386138?text=${encodeURIComponent(
       message
@@ -72,7 +72,9 @@ export default function Cart() {
 
 export function CartPage() {
   const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
+  const [name, setName] = useState("");
   const [location, setLocation] = useState("");
+  const [showNameError, setShowNameError] = useState(false);
   const [showLocationError, setShowLocationError] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const router = useRouter();
@@ -80,6 +82,13 @@ export function CartPage() {
   const handleOrder = () => {
     if (cart.length === 0) return;
 
+    // Validate name
+    if (!name.trim()) {
+      setShowNameError(true);
+      return;
+    }
+
+    // Validate location
     if (!location.trim()) {
       setShowLocationError(true);
       return;
@@ -91,7 +100,8 @@ export function CartPage() {
       message += `• ${item.name} x${item.quantity} - ${item.price}\n`;
     });
 
-    message += `\n Delivery Location: ${location}`;
+    message += `\n👤 Name: ${name}`;
+    message += `\n📍 Delivery Location: ${location}`;
 
     const whatsappLink = `https://wa.me/2349165386138?text=${encodeURIComponent(
       message
@@ -102,6 +112,7 @@ export function CartPage() {
 
     setTimeout(() => {
       clearCart();
+      setName("");
       setLocation("");
       router.push("/");
     }, 3000);
@@ -274,6 +285,33 @@ export function CartPage() {
                       {cart.reduce((sum, item) => sum + item.quantity, 0)}
                     </span>
                   </div>
+                </div>
+
+                <div className="mb-4">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-semibold text-gray-700 mb-2"
+                  >
+                    Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => {
+                      setName(e.target.value);
+                      setShowNameError(false);
+                    }}
+                    placeholder="Enter your name (e.g., John Doe)"
+                    className={`w-full px-4 py-3 border ${
+                      showNameError ? "border-red-500" : "border-gray-300"
+                    } rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+                  />
+                  {showNameError && (
+                    <p className="text-red-500 text-sm mt-1">
+                      Please enter your name
+                    </p>
+                  )}
                 </div>
 
                 <div className="mb-6">
