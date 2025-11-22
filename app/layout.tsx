@@ -21,7 +21,16 @@ export const metadata: Metadata = {
   title: "Mauve - Luxury Lip Glosses",
   description:
     "Luxury, shine, and care — made for every shade of beauty. Nigerian beauty brand with natural lip glosses.",
-  generator: "v0.app",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "Mauve - Luxury Lip Glosses",
+    description: "Luxury, shine, and care — made for every shade of beauty.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
