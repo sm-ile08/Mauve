@@ -21,11 +21,11 @@ export default function Hero() {
     >
       <div className="absolute inset-0">
         <img
-          src="/mauve4.jpg"
+          src="/mauve5.jpg"
           alt="Mauve Lip Gloss Collection"
-          className="w-full h-full object-cover opacity-60"
+          className="w-full h-full object-cover opacity-75"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-accent via-background to-accent-dark opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent via-background to-accent-dark opacity-40" />
       </div>
 
       <div className="absolute top-10 right-10 w-72 h-72 bg-primary-light rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
