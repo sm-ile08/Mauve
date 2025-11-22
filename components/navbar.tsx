@@ -32,13 +32,12 @@ export default function Navbar({ isScrolled }: NavbarProps) {
               Mauve
             </span> */}
             <img
-              src="/logo2.jpg"
+              src="/mauve3.png"
               alt="Mauve"
               className="h-10 md:h-15 w-auto object-contain"
             />
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
@@ -51,7 +50,6 @@ export default function Navbar({ isScrolled }: NavbarProps) {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden flex flex-col gap-1.5 p-2"
@@ -75,7 +73,6 @@ export default function Navbar({ isScrolled }: NavbarProps) {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden pb-4 border-t border-border">
             {navLinks.map((link) => (

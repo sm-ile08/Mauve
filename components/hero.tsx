@@ -17,21 +17,30 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full h-screen md:h-[600px] bg-gradient-to-br from-accent via-background to-accent-dark overflow-hidden pt-20"
+      className="relative w-full h-screen overflow-hidden pt-20"
     >
+      <div className="absolute inset-0">
+        <img
+          src="/mauve4.jpg"
+          alt="Mauve Lip Gloss Collection"
+          className="w-full h-full object-cover opacity-60"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-accent via-background to-accent-dark opacity-50" />
+      </div>
+
       <div className="absolute top-10 right-10 w-72 h-72 bg-primary-light rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
       <div className="absolute -bottom-8 left-10 w-72 h-72 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-center">
         <div
-          className={`w-full md:w-1/2 ${
+          className={`text-center ${
             isVisible ? "animate-fade-in" : "opacity-0"
           }`}
         >
-          <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-4 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mb-4 leading-tight drop-shadow-lg">
             Confidence in Every Swipe
           </h1>
-          <p className="text-lg md:text-xl text-text-muted mb-8 leading-relaxed max-w-md">
+          <p className="text-lg md:text-xl text-text-muted mb-8 leading-relaxed max-w-2xl mx-auto drop-shadow-md">
             Subtle, sophisticated, you — made for every shade of beauty.
           </p>
           <button
@@ -40,16 +49,6 @@ export default function Hero() {
           >
             Shop Now
           </button>
-        </div>
-
-        <div className="hidden md:flex md:w-1/2 items-center justify-center">
-          <div className="relative w-full h-96">
-            <img
-              src="/luxury-lip-gloss-product-display-with-models.jpg"
-              alt="Mauve Lip Gloss Collection"
-              className="w-full h-full object-cover rounded-2xl shadow-2xl"
-            />
-          </div>
         </div>
       </div>
     </section>
