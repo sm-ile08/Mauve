@@ -227,3 +227,17 @@ img[loading="lazy"] {
 img[loading="lazy"].loaded {
   @apply opacity-100;
 }
+
+@keyframes slow-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-100px);
+  }
+}
+
+.slow-bounce {
+  animation: slow-bounce 1.5s ease-in-out infinite;
+}

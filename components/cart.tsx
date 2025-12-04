@@ -44,7 +44,7 @@ export default function Cart() {
     <>
       <button
         onClick={() => router.push("/cart")}
-        className="fixed bottom-6 right-6 bg-primary text-white rounded-full p-4 shadow-lg hover:bg-primary-light transition-all duration-300 transform hover:scale-110 z-50"
+        className="fixed bottom-6 right-6 bg-primary text-white rounded-full p-4 shadow-lg hover:bg-primary-light transition-all duration-300 z-50 slow-bounce"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -82,13 +82,11 @@ export function CartPage() {
   const handleOrder = () => {
     if (cart.length === 0) return;
 
-    // Validate name
     if (!name.trim()) {
       setShowNameError(true);
       return;
     }
 
-    // Validate location
     if (!location.trim()) {
       setShowLocationError(true);
       return;
@@ -100,8 +98,8 @@ export function CartPage() {
       message += `• ${item.name} x${item.quantity} - ${item.price}\n`;
     });
 
-    message += `\n👤 Name: ${name}`;
-    message += `\n📍 Delivery Location: ${location}`;
+    message += `\n Name: ${name}`;
+    message += `\n Delivery Location: ${location}`;
 
     const whatsappLink = `https://wa.me/2349165386138?text=${encodeURIComponent(
       message
