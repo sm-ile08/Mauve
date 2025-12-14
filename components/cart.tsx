@@ -25,7 +25,7 @@ export default function Cart() {
       message += `• ${item.name} x${item.quantity} - ${item.price}\n`;
     });
 
-    message += `\n📍 Delivery Location: ${location}`;
+    message += `\n Delivery Location: ${location}`;
 
     const whatsappLink = `https://wa.me/2349165386138?text=${encodeURIComponent(
       message

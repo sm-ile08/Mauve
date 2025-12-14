@@ -27,27 +27,6 @@ const products = [
   },
   {
     id: 4,
-    name: "Squeeze Tube: Glass Shine",
-    description: "Soft clear with subtle shimmer for an effortless glow",
-    price: "₦3,500",
-    image: "/clear-glass-lip-gloss-luxury.jpg",
-  },
-  {
-    id: 5,
-    name: "Squeeze Tube: Soft Crush",
-    description: "pink with velvety finish for timeless elegance",
-    price: "₦3,500",
-    image: "/nude-lip-gloss-luxury-product.jpg",
-  },
-  {
-    id: 6,
-    name: "Squeeze Tube: Cocoa Charm",
-    description: "chocolate gloss with high-shine finish",
-    price: "₦3,500",
-    image: "/clear-glass-lip-gloss-luxury.jpg",
-  },
-  {
-    id: 7,
     name: "Mauve Balm",
     description:
       "A rich, glossy balm that keeps your lips soft, smooth, and glow-ready all day.",
@@ -55,7 +34,7 @@ const products = [
     image: "/clear-glass-lip-gloss-luxury.jpg",
   },
   {
-    id: 8,
+    id: 5,
     name: "Mauve Scrub",
     description:
       "This all-natural scrub removes dead skin while locking in moisture",
