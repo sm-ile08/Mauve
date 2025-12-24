@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 export default function BackendTest() {
   useEffect(() => {
-    fetch("http://localhost:3000/api/health")
+    fetch("https://mauve-backend1.onrender.com/api/health")
       .then((res) => res.json())
       .then((data) => console.log(" Backend says:", data))
       .catch((err) => console.error(" Backend error:", err));
