@@ -75,7 +75,6 @@
 }
 
 @theme inline {
-  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -228,16 +227,16 @@ img[loading="lazy"].loaded {
   @apply opacity-100;
 }
 
-@keyframes slow-bounce {
+@keyframes breathe {
   0%,
   100% {
-    transform: translateY(0);
+    transform: scale(1.5);
   }
   50% {
-    transform: translateY(-100px);
+    transform: scale(1.15);
   }
 }
 
 .slow-bounce {
-  animation: slow-bounce 1.5s ease-in-out infinite;
+  animation: breathe 2s ease-in-out infinite;
 }
