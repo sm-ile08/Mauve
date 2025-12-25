@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -13,95 +13,76 @@ interface OrderDetails {
 
 export default function PaymentPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const [mounted, setMounted] = useState(false);
-  const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
+  const [order, setOrder] = useState<OrderDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [showThankYou, setShowThankYou] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const params = new URLSearchParams(window.location.search);
 
-  useEffect(() => {
-    if (!mounted) return;
+    const orderCode = params.get("order");
+    const amount = params.get("amount");
+    const email = params.get("email");
 
-    const orderCode = searchParams.get("order");
-    const amount = searchParams.get("amount");
-    const customerEmail = searchParams.get("email");
-
-    if (orderCode && amount) {
-      setOrderDetails({
-        orderCode,
-        amount: parseFloat(amount),
-        email: customerEmail ?? "",
-      });
-      setLoading(false);
-    } else {
-      router.push("/");
+    if (!orderCode || !amount) {
+      router.replace("/");
+      return;
     }
-  }, [mounted, searchParams, router]);
 
-  const handleCopyAccountNumber = () => {
-    navigator.clipboard.writeText("6470745840");
-    alert("Account number copied to clipboard!");
+    setOrder({
+      orderCode,
+      amount: Number(amount),
+      email: email ?? "",
+    });
+
+    setLoading(false);
+  }, [router]);
+
+  const copyText = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    alert(`${label} copied to clipboard`);
   };
 
-  const handleCopyAmount = () => {
-    if (!orderDetails) return;
-    navigator.clipboard.writeText(orderDetails.amount.toString());
-    alert("Amount copied to clipboard!");
-  };
-
-  const handleCopyOrderCode = () => {
-    if (!orderDetails) return;
-    navigator.clipboard.writeText(orderDetails.orderCode);
-    alert("Order code copied to clipboard!");
-  };
-
-  const handlePaymentCompleted = () => {
+  const completePayment = () => {
     setShowThankYou(true);
   };
 
-  if (!mounted || loading) {
+  if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary" />
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="h-16 w-16 animate-spin rounded-full border-t-4 border-primary" />
       </div>
     );
   }
 
-  if (showThankYou && orderDetails) {
+  if (showThankYou && order) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="max-w-2xl w-full bg-white rounded-2xl shadow-2xl p-8 md:p-12 text-center">
-          <h1 className="text-3xl md:text-4xl font-serif font-bold mb-4">
-            Thank You for Shopping with Us!
+      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
+        <div className="w-full max-w-2xl rounded-2xl bg-white p-8 shadow-2xl text-center">
+          <h1 className="text-4xl font-serif font-bold mb-4">
+            Thank You for Shopping with Us
           </h1>
 
           <div className="bg-primary/5 rounded-lg p-6 mb-6">
-            <p className="text-lg mb-2">Your order code is:</p>
-            <p className="text-2xl font-mono font-bold text-primary mb-4">
-              {orderDetails.orderCode}
+            <p className="text-lg mb-2">Your order code:</p>
+            <p className="text-2xl font-mono font-bold text-primary mb-2">
+              {order.orderCode}
             </p>
-            <p className="text-gray-600">
-              Keep this code safe for tracking your order
-            </p>
+            <p className="text-gray-600">Keep this code safe for tracking</p>
           </div>
 
           <div className="space-y-4">
             <button
               onClick={() => router.push("/")}
-              className="w-full bg-primary text-white py-4 rounded-full font-bold"
+              className="w-full rounded-full bg-primary py-4 font-bold text-white"
             >
               Continue Shopping
             </button>
+
             <button
-              onClick={() =>
-                router.push(`/track?order=${orderDetails.orderCode}`)
-              }
-              className="w-full bg-gray-200 py-4 rounded-full font-semibold"
+              onClick={() => router.push(`/track?order=${order.orderCode}`)}
+              className="w-full rounded-full bg-gray-200 py-4 font-semibold"
             >
               Track My Order
             </button>
@@ -112,61 +93,64 @@ export default function PaymentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4">
-      <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-6">
+    <div className="min-h-screen bg-background px-4 py-8">
+      <div className="mx-auto max-w-2xl">
+        <h1 className="mb-6 text-center text-3xl font-bold">
           Complete Your Payment
         </h1>
 
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
-          <div className="flex justify-between items-center mb-4 border-b pb-4">
-            <span className="font-semibold">Order Code:</span>
+        <div className="mb-6 rounded-2xl bg-white p-6 shadow-lg">
+          <div className="flex items-center justify-between border-b pb-4 mb-4">
+            <span className="font-semibold">Order Code</span>
             <button
-              onClick={handleCopyOrderCode}
+              onClick={() => copyText(order!.orderCode, "Order code")}
               className="font-mono font-bold text-primary"
             >
-              {orderDetails?.orderCode}
+              {order!.orderCode}
             </button>
           </div>
 
-          <div className="bg-primary/10 rounded-xl p-6 mb-6">
-            <p className="text-sm mb-2">Amount to Pay:</p>
+          <div className="mb-6 rounded-xl bg-primary/10 p-6 text-center">
+            <p className="text-sm mb-2">Amount to Pay</p>
             <button
-              onClick={handleCopyAmount}
+              onClick={() => copyText(order!.amount.toString(), "Amount")}
               className="text-4xl font-bold text-primary"
             >
-              ₦{orderDetails && orderDetails.amount.toLocaleString()}
+              ₦{order!.amount.toLocaleString()}
             </button>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+          {/* Bank Info */}
+          <div className="space-y-3 rounded-lg bg-gray-50 p-4">
             <div className="flex justify-between">
-              <span>Bank Name:</span>
+              <span>Bank Name</span>
               <span className="font-bold">Moniepoint</span>
             </div>
+
             <div className="flex justify-between">
-              <span>Account Number:</span>
+              <span>Account Number</span>
               <button
-                onClick={handleCopyAccountNumber}
+                onClick={() => copyText("6470745840", "Account number")}
                 className="font-bold text-primary"
               >
                 6470745840
               </button>
             </div>
+
             <div className="flex justify-between">
-              <span>Account Name:</span>
+              <span>Account Name</span>
               <span className="font-bold">Fabiyi Oluwaferanmi Esther</span>
             </div>
           </div>
 
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
-            Use <strong>{orderDetails?.orderCode}</strong> as payment narration.
+          <div className="mt-6 border-l-4 border-yellow-400 bg-yellow-50 p-4">
+            Use <strong>{order!.orderCode}</strong> as payment narration.
           </div>
         </div>
 
         <button
-          onClick={handlePaymentCompleted}
-          className="w-full bg-primary text-white py-4 rounded-full font-bold"
+          onClick={completePayment}
+          className="w-full rounded-full bg-primary py-4 font-bold text-white"
         >
           I Have Completed the Transfer
         </button>
