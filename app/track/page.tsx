@@ -1,10 +1,10 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { KeyboardEvent } from "react";
-
-export const dynamic = "force-dynamic";
 
 interface OrderItem {
   product_name: string;
