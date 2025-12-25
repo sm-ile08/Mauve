@@ -1,9 +1,8 @@
-"use client";
+export const dynamic = "force-dynamic";
+("use client");
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-export const dynamic = "force-dynamic";
 
 interface OrderDetails {
   orderCode: string;
@@ -120,7 +119,6 @@ export default function PaymentPage() {
             </button>
           </div>
 
-          {/* Bank Info */}
           <div className="space-y-3 rounded-lg bg-gray-50 p-4">
             <div className="flex justify-between">
               <span>Bank Name</span>
