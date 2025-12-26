@@ -1,10 +1,10 @@
 "use client";
 
-export const dynamic = "force-dynamic";
-
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { KeyboardEvent } from "react";
+
+export const dynamic = "force-dynamic";
 
 interface OrderItem {
   product_name: string;
@@ -88,13 +88,12 @@ export default function TrackOrderPage() {
       case "pending_payment":
         return "bg-yellow-100 text-yellow-800 border-yellow-300";
       case "paid":
+      case "delivered":
         return "bg-green-100 text-green-800 border-green-300";
       case "processing":
         return "bg-blue-100 text-blue-800 border-blue-300";
       case "shipped":
         return "bg-purple-100 text-purple-800 border-purple-300";
-      case "delivered":
-        return "bg-green-100 text-green-800 border-green-300";
       case "cancelled":
         return "bg-red-100 text-red-800 border-red-300";
       default:
@@ -207,6 +206,7 @@ export default function TrackOrderPage() {
           </p>
         </div>
 
+        {/* Input */}
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-6">
           <div className="flex flex-col sm:flex-row gap-4">
             <input
@@ -215,10 +215,8 @@ export default function TrackOrderPage() {
               onChange={(e) => setOrderCode(e.target.value.toUpperCase())}
               placeholder="e.g., MAUVE-L2X9KP3-A1B2C3"
               className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary font-mono"
-              onKeyPress={(e: KeyboardEvent<HTMLInputElement>) => {
-                if (e.key === "Enter") {
-                  handleSearch();
-                }
+              onKeyDown={(e: KeyboardEvent<HTMLInputElement>) => {
+                if (e.key === "Enter") handleSearch();
               }}
             />
             <button
@@ -237,6 +235,7 @@ export default function TrackOrderPage() {
           )}
         </div>
 
+        {/* Order Details */}
         {orderDetails && (
           <div className="space-y-6">
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
@@ -282,11 +281,7 @@ export default function TrackOrderPage() {
                   <p className="font-semibold text-foreground">
                     {new Date(orderDetails.created_at).toLocaleDateString(
                       "en-US",
-                      {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }
+                      { year: "numeric", month: "long", day: "numeric" }
                     )}
                   </p>
                 </div>
