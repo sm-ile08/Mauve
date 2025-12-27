@@ -218,21 +218,17 @@ export function CartPage() {
         })),
       };
 
-      const response = await fetch(
-        "https://mauve-backend.onrender.com/api/orders",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(orderData),
-        }
-      );
+      const response = await fetch("https://mauve-backend.onrender.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
 
       const result = await response.json();
 
       if (response.ok) {
-        // Redirect to payment page with order details
         clearCart();
         router.push(
           `/payment?order=${result.order.order_code}&amount=${result.order.total_amount}&email=${email}`
@@ -296,7 +292,6 @@ export function CartPage() {
         </div>
       )}
 
-      {/* Bank Details Modal */}
       {showBankDetails && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
