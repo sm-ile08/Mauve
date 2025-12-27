@@ -1,7 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
 import { Playfair_Display, Poppins } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { CartProvider } from "../components/cart-context";
 import Cart from "../components/cart";
@@ -61,7 +60,6 @@ export default function RootLayout({
           {children}
           <Cart />
         </CartProvider>
-        <Analytics />
       </body>
     </html>
   );
