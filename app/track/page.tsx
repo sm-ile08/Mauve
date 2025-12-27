@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, KeyboardEvent } from "react";
+import { useEffect, useState, KeyboardEvent, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface OrderItem {
@@ -31,7 +31,7 @@ type OrderStatus =
   | "delivered"
   | "cancelled";
 
-export default function TrackClient() {
+function TrackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -127,6 +127,7 @@ export default function TrackClient() {
           </p>
         </div>
 
+        {/* Search Section */}
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-6">
           <div className="space-y-4">
             <div>
@@ -159,8 +160,10 @@ export default function TrackClient() {
           </div>
         </div>
 
+        {/* Order Details */}
         {orderDetails && (
           <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 space-y-6">
+            {/* Status Badge */}
             <div className="text-center">
               <span
                 className={`inline-block px-6 py-3 rounded-full font-bold text-lg border-2 ${getStatusColor(
@@ -171,6 +174,7 @@ export default function TrackClient() {
               </span>
             </div>
 
+            {/* Order Info */}
             <div className="border-t border-gray-200 pt-6">
               <h2 className="text-2xl font-bold text-foreground mb-4">
                 Order Information
@@ -205,6 +209,7 @@ export default function TrackClient() {
               </div>
             </div>
 
+            {/* Order Items */}
             <div className="border-t border-gray-200 pt-6">
               <h2 className="text-2xl font-bold text-foreground mb-4">
                 Order Items
@@ -230,6 +235,7 @@ export default function TrackClient() {
               </div>
             </div>
 
+            {/* Order Summary */}
             <div className="border-t border-gray-200 pt-6">
               <h2 className="text-2xl font-bold text-foreground mb-4">
                 Order Summary
@@ -256,10 +262,11 @@ export default function TrackClient() {
               </div>
             </div>
 
+            {/* Payment Instructions for Pending Orders */}
             {orderDetails.status === "pending_payment" && (
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg">
                 <h3 className="font-bold text-yellow-900 mb-2">
-                  Payment Pending
+                  ⚠️ Payment Pending
                 </h3>
                 <p className="text-sm text-yellow-800 mb-3">
                   Please complete your payment to process your order.
@@ -279,5 +286,22 @@ export default function TrackClient() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function TrackClient() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-primary mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading...</p>
+          </div>
+        </div>
+      }
+    >
+      <TrackContent />
+    </Suspense>
   );
 }
