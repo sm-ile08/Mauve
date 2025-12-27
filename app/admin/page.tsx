@@ -71,7 +71,7 @@ export default function AdminPanel() {
       const result = await response.json();
 
       if (response.ok) {
-        setMessage(` Payment confirmed successfully! Email sent to customer.`);
+        setMessage(`Payment confirmed successfully! Email sent to customer.`);
         setMessageType("success");
         setOrderCode("");
         if (showOrders) {
@@ -94,7 +94,7 @@ export default function AdminPanel() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://mauve-backend.com/api/admin/orders?status=pending_payment&limit=50"
+        "https://mauve-backend.onrender.com/api/admin/orders?status=pending_payment&limit=50"
       );
       const result = await response.json();
 
