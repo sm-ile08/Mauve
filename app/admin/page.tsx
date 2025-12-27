@@ -55,7 +55,7 @@ export default function AdminPanel() {
 
     try {
       const response = await fetch(
-        `https://mauve-backend1.onrender.com/api/admin/orders/${orderCode}/confirm-payment`,
+        `https://mauve-backend.onrender.com/api/admin/orders/${orderCode}/confirm-payment`,
         {
           method: "POST",
           headers: {
@@ -94,7 +94,7 @@ export default function AdminPanel() {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://mauve-backend1.onrender.com/api/admin/orders?status=pending_payment&limit=50"
+        "https://mauve-backend1..com/api/admin/orders?status=pending_payment&limit=50"
       );
       const result = await response.json();
 

@@ -218,9 +218,8 @@ export function CartPage() {
         })),
       };
 
-      // Send to backend
       const response = await fetch(
-        "https://mauve-backend1.onrender.com/api/orders",
+        "https://mauve-backend.onrender.com/api/orders",
         {
           method: "POST",
           headers: {
