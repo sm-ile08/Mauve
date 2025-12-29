@@ -87,7 +87,6 @@ export function CartPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
-  // Calculate delivery fee based on location
   const getDeliveryFee = () => {
     const loc = location.toLowerCase();
 
@@ -134,7 +133,6 @@ export function CartPage() {
     return 8000;
   };
 
-  // Calculate products total (parse prices)
   const calculateProductsTotal = () => {
     return cart.reduce((total, item) => {
       const price = parseFloat(item.price.replace(/[₦,]/g, "")) || 0;
@@ -181,7 +179,6 @@ export function CartPage() {
   const handleBankTransferOrder = async () => {
     if (cart.length === 0) return;
 
-    // Validate all fields
     let hasError = false;
     if (!name.trim()) {
       setShowNameError(true);
@@ -205,7 +202,6 @@ export function CartPage() {
     setIsSubmitting(true);
 
     try {
-      // Prepare order data
       const orderData = {
         customer_name: name,
         customer_email: email,
@@ -218,13 +214,16 @@ export function CartPage() {
         })),
       };
 
-      const response = await fetch("https://mauve-backend.onrender.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
+      const response = await fetch(
+        "https://mauve-backend.onrender.com/api/orders",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        }
+      );
 
       const result = await response.json();
 
