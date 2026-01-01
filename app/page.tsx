@@ -7,7 +7,7 @@ import Products from "@/components/products";
 import About from "@/components/about";
 import Testimonials from "@/components/testimonials";
 import Footer from "@/components/footer";
-import WhatsAppButton from "@/components/whatsapp-button";
+// import WhatsAppButton from "@/components/whatsapp-button";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
