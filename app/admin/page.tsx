@@ -212,7 +212,6 @@ export default function AdminPanel() {
           </button>
         </div>
 
-        {/* Confirm Payment Section */}
         <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-6">
           <h2 className="text-2xl font-bold text-foreground mb-6">
             Confirm Payment

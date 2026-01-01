@@ -87,6 +87,134 @@ export function CartPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
+  const getPickupPoints = (loc: string) => {
+    const normalized = loc
+      .toLowerCase()
+      .replace(/\(.*?\)/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    const pickupPoints: Record<string, string[]> = {
+      futa: [
+        "North Gate",
+        "South Gate",
+        "Main Gate",
+        "SEET Gate",
+        "Alumni Park",
+        "ETF Park",
+        "West Gate",
+      ],
+      akure: [
+        "Oba Adesida Road Motor Park",
+        "NEPA Roundabout",
+        "Cathedral Junction",
+        "Oba Ile Park",
+        "Oyemekun Road Park",
+        "Isikan Motor Park",
+      ],
+      ondo: ["Ondo Garage", "Yaba Park", "Ondo Town Park"],
+      lagos: [
+        "Ojota Park",
+        "Mile 2 Park",
+        "Oshodi Park",
+        "Berger Park",
+        "Ikeja Motor Park",
+        "CMS Marina",
+        "Ajah Park",
+        "Lekki Phase 1 Roundabout",
+        "VI (Victoria Island) Park",
+      ],
+      ibadan: [
+        "Challenge Park",
+        "Iwo Road Park",
+        "Ojoo Park",
+        "Gate Park",
+        "New Garage",
+      ],
+      oyo: [
+        "Challenge Park",
+        "Iwo Road Park",
+        "Ojoo Park",
+        "Gate Park",
+        "New Garage",
+      ],
+      abuja: [
+        "Utako Motor Park",
+        "Jabi Motor Park",
+        "Nyanya Motor Park",
+        "Kubwa Park",
+        "Berger Roundabout",
+      ],
+      fct: [
+        "Utako Motor Park",
+        "Jabi Motor Park",
+        "Nyanya Motor Park",
+        "Kubwa Park",
+        "Berger Roundabout",
+      ],
+      "port harcourt": [
+        "Mile 1 Park",
+        "Mile 3 Park",
+        "Rumuokoro Park",
+        "Eleme Junction",
+      ],
+      rivers: [
+        "Mile 1 Park",
+        "Mile 3 Park",
+        "Rumuokoro Park",
+        "Eleme Junction",
+      ],
+      ekiti: ["Ado-Ekiti Motor Park", "Basiri Park", "Okesa Park"],
+      osun: [
+        "Oke-Fia Motor Park",
+        "Olaiya Junction",
+        "Old Garage",
+        "OAU",
+        "Ifetedo",
+        "Bowen University",
+      ],
+      ogun: ["Abeokuta Motor Park", "Panseke Park", "Lafenwa Park"],
+      kwara: ["Ilorin Motor Park", "Gaa Akanbi Park", "Challenge Park"],
+      edo: ["Benin City Motor Park", "Uselu Park", "Ring Road Park"],
+      delta: ["Asaba Motor Park", "Warri Park", "Effurun Park"],
+      bayelsa: ["Yenagoa Park", "Amarata Junction"],
+      "akwa ibom": ["Uyo Motor Park", "Ikot Ekpene Park"],
+      "cross river": ["Calabar Motor Park", "Marian Road Park"],
+      anambra: ["Onitsha Motor Park", "Upper Iweka Park", "Awka Park"],
+      enugu: ["Holy Ghost Park", "New Market Park", "Ogbete Park"],
+      ebonyi: ["Abakaliki Motor Park", "Kpirikpiri Junction"],
+      imo: ["Owerri Motor Park", "Douglas Road Park"],
+      abia: ["Umuahia Motor Park", "Aba Park"],
+      kogi: ["Lokoja Motor Park", "Ganaja Junction"],
+      niger: ["Minna Motor Park", "Kpakungu Park"],
+      nasarawa: ["Lafia Motor Park", "Masaka Park"],
+      benue: ["Makurdi Motor Park", "Wurukum Park"],
+      plateau: ["Jos Motor Park", "Terminus Park"],
+      kaduna: ["Kaduna Motor Park", "Kawo Park", "Junction Road Park"],
+      zamfara: ["Gusau Motor Park"],
+      kano: ["Kano Motor Park", "Sabon Gari Park"],
+      katsina: ["Katsina Motor Park", "Central Park"],
+      sokoto: ["Sokoto Motor Park", "Central Junction"],
+      kebbi: ["Birnin Kebbi Park"],
+      jigawa: ["Dutse Motor Park"],
+      bauchi: ["Bauchi Motor Park", "Railway Park"],
+      gombe: ["Gombe Motor Park"],
+      taraba: ["Jalingo Park"],
+      adamawa: ["Yola Motor Park", "Jimeta Park"],
+      borno: ["Maiduguri Motor Park", "Monday Market Park"],
+      yobe: ["Damaturu Park"],
+    };
+
+    return (
+      pickupPoints[normalized] ?? [
+        "Main Motor Park",
+        "Central Bus Terminal",
+        "Town Park",
+        "Express Park",
+      ]
+    );
+  };
+
   const getDeliveryFee = () => {
     const loc = location.toLowerCase();
 
@@ -160,6 +288,7 @@ export function CartPage() {
 
     message += `\n Name: ${name}`;
     message += `\n Delivery Location: ${location}`;
+    message += `\n Pickup Point: ${address}`;
 
     const whatsappLink = `https://wa.me/2349165386138?text=${encodeURIComponent(
       message
@@ -172,6 +301,7 @@ export function CartPage() {
       clearCart();
       setName("");
       setLocation("");
+      setAddress("");
       router.push("/");
     }, 3000);
   };
@@ -228,10 +358,8 @@ export function CartPage() {
       const result = await response.json();
 
       if (response.ok) {
-        clearCart();
-        router.push(
-          `/payment?order=${result.order.order_code}&amount=${result.order.total_amount}&email=${email}`
-        );
+        setOrderCode(result.order.order_code);
+        setShowBankDetails(true);
       } else {
         alert(`Error: ${result.error || "Failed to create order"}`);
       }
@@ -246,7 +374,7 @@ export function CartPage() {
   };
 
   const handleCopyAccountNumber = () => {
-    navigator.clipboard.writeText("1234567890");
+    navigator.clipboard.writeText("6470745840");
     alert("Account number copied!");
   };
 
@@ -257,7 +385,6 @@ export function CartPage() {
 
   return (
     <div className="min-h-screen bg-background py-8">
-      {/* Success Confirmation Modal */}
       {showConfirmation && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl p-8 max-w-md w-full text-center shadow-2xl animate-fade-in">
@@ -650,46 +777,26 @@ export function CartPage() {
 
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
-                      Delivery Address <span className="text-red-500">*</span>
-                    </label>
-                    <textarea
-                      value={address}
-                      onChange={(e) => {
-                        setAddress(e.target.value);
-                        setShowAddressError(false);
-                      }}
-                      placeholder="15 Admiralty Way, Lekki Phase 1"
-                      rows={2}
-                      className={`w-full px-4 py-3 border ${
-                        showAddressError ? "border-red-500" : "border-gray-300"
-                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-primary resize-none`}
-                    />
-                    {showAddressError && (
-                      <p className="text-red-500 text-sm mt-1">
-                        Please enter your address
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Delivery Location <span className="text-red-500">*</span>
                     </label>
                     <select
                       value={location}
-                      onChange={(e) => setLocation(e.target.value)}
+                      onChange={(e) => {
+                        setLocation(e.target.value);
+                        setAddress("");
+                      }}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     >
-                      <optgroup label=" Campus">
+                      <optgroup label="Campus">
                         <option value="FUTA">FUTA (Free Delivery)</option>
                       </optgroup>
 
-                      <optgroup label=" Ondo State">
+                      <optgroup label="Ondo State">
                         <option value="Akure">Akure (₦1,000)</option>
                         <option value="Ondo">Ondo (₦2,000)</option>
                       </optgroup>
 
-                      <optgroup label=" South West">
+                      <optgroup label="South West">
                         <option value="Ekiti">Ekiti (₦3,000)</option>
                         <option value="Osun">Osun (₦4,000)</option>
                         <option value="Oyo">Oyo/Ibadan (₦4,500)</option>
@@ -698,7 +805,7 @@ export function CartPage() {
                         <option value="Kwara">Kwara (₦5,000)</option>
                       </optgroup>
 
-                      <optgroup label=" South South">
+                      <optgroup label="South South">
                         <option value="Edo">Edo (₦6,000)</option>
                         <option value="Delta">Delta (₦7,000)</option>
                         <option value="Rivers">Rivers (₦8,000)</option>
@@ -709,15 +816,14 @@ export function CartPage() {
                         </option>
                       </optgroup>
 
-                      <optgroup label=" South East">
+                      <optgroup label="South East">
                         <option value="Anambra">Anambra (₦7,000)</option>
                         <option value="Enugu">Enugu (₦7,500)</option>
                         <option value="Ebonyi">Ebonyi (₦7,500)</option>
                         <option value="Imo">Imo (₦8,000)</option>
                         <option value="Abia">Abia (₦8,000)</option>
                       </optgroup>
-
-                      <optgroup label=" North Central">
+                      <optgroup label="North Central">
                         <option value="Kogi">Kogi (₦6,000)</option>
                         <option value="Niger">Niger (₦8,000)</option>
                         <option value="Abuja">Abuja/FCT (₦8,000)</option>
@@ -726,7 +832,7 @@ export function CartPage() {
                         <option value="Plateau">Plateau (₦9,000)</option>
                       </optgroup>
 
-                      <optgroup label=" North West">
+                      <optgroup label="North West">
                         <option value="Kaduna">Kaduna (₦10,000)</option>
                         <option value="Zamfara">Zamfara (₦11,000)</option>
                         <option value="Kano">Kano (₦12,000)</option>
@@ -736,7 +842,7 @@ export function CartPage() {
                         <option value="Jigawa">Jigawa (₦12,000)</option>
                       </optgroup>
 
-                      <optgroup label=" North East">
+                      <optgroup label="North East">
                         <option value="Bauchi">Bauchi (₦10,000)</option>
                         <option value="Gombe">Gombe (₦11,000)</option>
                         <option value="Taraba">Taraba (₦11,000)</option>
@@ -745,6 +851,34 @@ export function CartPage() {
                         <option value="Yobe">Yobe (₦13,000)</option>
                       </optgroup>
                     </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Pickup Point <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      value={address}
+                      onChange={(e) => {
+                        setAddress(e.target.value);
+                        setShowAddressError(false);
+                      }}
+                      className={`w-full px-4 py-3 border ${
+                        showAddressError ? "border-red-500" : "border-gray-300"
+                      } rounded-lg focus:outline-none focus:ring-2 focus:ring-primary`}
+                    >
+                      <option value="">Select a pickup point</option>
+                      {getPickupPoints(location).map((point) => (
+                        <option key={point} value={point}>
+                          {point}
+                        </option>
+                      ))}
+                    </select>
+                    {showAddressError && (
+                      <p className="text-red-500 text-sm mt-1">
+                        Please select a pickup point
+                      </p>
+                    )}
                   </div>
                 </div>
 
