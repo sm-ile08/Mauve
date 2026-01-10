@@ -273,9 +273,9 @@ function TrackContent() {
                 </p>
                 <div className="text-sm text-yellow-800">
                   <p className="font-bold">Transfer Details:</p>
-                  <p>Bank: Access Bank</p>
-                  <p>Account Number: 1234567890</p>
-                  <p>Account Name: Mauve Beauty</p>
+                  <p>Bank: Moniepoint</p>
+                  <p>Account Number: 6470745840</p>
+                  <p>Account Name: Fabiyi Oluwaferanmi Esther</p>
                   <p className="mt-2">
                     <strong>Reference:</strong> {orderDetails.order_code}
                   </p>

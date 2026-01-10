@@ -8,21 +8,21 @@ const products = [
     id: 1,
     name: "Glass Shine",
     description: "Soft clear with subtle shimmer for an effortless glow",
-    price: "₦4,499",
+    price: "₦4,500",
     image: "/mauve-lip-gloss-tube-luxury.jpg",
   },
   {
     id: 2,
     name: "Soft Crush",
     description: "pink with velvety finish for timeless elegance",
-    price: "₦4,499",
+    price: "₦4,500",
     image: "/nude-lip-gloss-luxury-product.jpg",
   },
   {
     id: 3,
     name: "Cocoa Charm",
     description: "chocolate gloss with high-shine finish",
-    price: "₦4,499",
+    price: "₦4,500",
     image: "/clear-glass-lip-gloss-luxury.jpg",
   },
   {
@@ -30,7 +30,7 @@ const products = [
     name: "Mauve Balm",
     description:
       "A rich, glossy balm that keeps your lips soft, smooth, and glow-ready all day.",
-    price: "₦2,999",
+    price: "₦3,000",
     image: "/clear-glass-lip-gloss-luxury.jpg",
   },
   {
@@ -38,7 +38,7 @@ const products = [
     name: "Mauve Scrub",
     description:
       "This all-natural scrub removes dead skin while locking in moisture",
-    price: "₦2,999",
+    price: "₦3,000",
     image: "/clear-glass-lip-gloss-luxury.jpg",
   },
 ];
