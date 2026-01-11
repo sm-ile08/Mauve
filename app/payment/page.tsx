@@ -60,12 +60,29 @@ export default function PaymentPage() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-background">
         <div className="w-full max-w-2xl rounded-2xl bg-white p-8 shadow-2xl text-center">
+          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-10 w-10 text-green-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          </div>
+
           <h1 className="text-4xl font-serif font-bold mb-4">
             Thank You for Shopping with Us
           </h1>
 
-          <div className="bg-primary/5 rounded-lg p-6 mb-6">
-            <p className="text-lg mb-2">Your order code:</p>
+          <div className="bg-primary/5 rounded-lg p-6 mb-8">
+            <p className="text-lg mb-2 text-gray-600">Your order code:</p>
             <p className="text-2xl font-mono font-bold text-primary mb-2">
               {order.orderCode}
             </p>
@@ -74,17 +91,17 @@ export default function PaymentPage() {
 
           <div className="space-y-4">
             <button
-              onClick={() => router.push("/")}
-              className="w-full rounded-full bg-primary py-4 font-bold text-white"
+              onClick={() => router.push(`/track?order=${order.orderCode}`)}
+              className="w-full rounded-full bg-primary py-4 font-bold text-white text-lg hover:bg-primary-light transition-all duration-300 shadow-lg"
             >
-              Continue Shopping
+              Track Your Order
             </button>
 
             <button
-              onClick={() => router.push(`/track?order=${order.orderCode}`)}
-              className="w-full rounded-full bg-gray-200 py-4 font-semibold"
+              onClick={() => router.push("/")}
+              className="w-full rounded-full bg-gray-800 py-4 font-semibold text-white text-lg hover:bg-gray-900 transition-all duration-300 shadow-lg"
             >
-              Track My Order
+              Done
             </button>
           </div>
         </div>
