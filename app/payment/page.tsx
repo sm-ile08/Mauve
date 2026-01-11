@@ -58,7 +58,7 @@ export default function PaymentPage() {
 
   if (showThankYou && order) {
     return (
-      <div className="flex justify-center p-4 pt-12 bg-background">
+      <div className="min-h-screen flex justify-center p-4 pt-12 bg-background">
         <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
