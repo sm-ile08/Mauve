@@ -58,12 +58,12 @@ export default function PaymentPage() {
 
   if (showThankYou && order) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
-        <div className="w-full max-w-2xl rounded-2xl bg-white p-8 shadow-2xl text-center">
-          <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+      <div className="flex justify-center p-4 pt-12 bg-background">
+        <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl text-center">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-10 w-10 text-green-500"
+              className="h-8 w-8 text-green-500"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -77,29 +77,31 @@ export default function PaymentPage() {
             </svg>
           </div>
 
-          <h1 className="text-4xl font-serif font-bold mb-4">
+          <h1 className="text-2xl font-serif font-bold mb-3">
             Thank You for Shopping with Us
           </h1>
 
-          <div className="bg-primary/5 rounded-lg p-6 mb-8">
-            <p className="text-lg mb-2 text-gray-600">Your order code:</p>
-            <p className="text-2xl font-mono font-bold text-primary mb-2">
+          <div className="bg-primary/5 rounded-lg p-4 mb-6">
+            <p className="text-sm mb-1 text-gray-600">Your order code:</p>
+            <p className="text-xl font-mono font-bold text-primary mb-1">
               {order.orderCode}
             </p>
-            <p className="text-gray-600">Keep this code safe for tracking</p>
+            <p className="text-sm text-gray-600">
+              Keep this code safe for tracking
+            </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             <button
               onClick={() => router.push(`/track?order=${order.orderCode}`)}
-              className="w-full rounded-full bg-primary py-4 font-bold text-white text-lg hover:bg-primary-light transition-all duration-300 shadow-lg"
+              className="w-full rounded-full bg-primary py-3 font-bold text-white hover:bg-primary-light transition-all duration-300 shadow-lg"
             >
               Track Your Order
             </button>
 
             <button
               onClick={() => router.push("/")}
-              className="w-full rounded-full bg-gray-800 py-4 font-semibold text-white text-lg hover:bg-gray-900 transition-all duration-300 shadow-lg"
+              className="w-full rounded-full bg-gray-800 py-3 font-semibold text-white hover:bg-gray-900 transition-all duration-300 shadow-lg"
             >
               Done
             </button>
