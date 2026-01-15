@@ -177,6 +177,8 @@
 //   );
 // }
 
+"use client";
+
 import { useEffect, useState } from "react";
 
 interface OrderDetails {
