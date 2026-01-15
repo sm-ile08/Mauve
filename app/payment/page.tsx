@@ -30,9 +30,12 @@ export default function PaymentPage() {
       return;
     }
 
+    const originalAmount = Number(amount);
+    const discountedAmount = originalAmount * 0.8;
+
     setOrder({
       orderCode,
-      amount: Number(amount),
+      amount: discountedAmount,
       email: email ?? "",
     });
 
@@ -111,6 +114,9 @@ export default function PaymentPage() {
     );
   }
 
+  const originalAmount = order ? order.amount / 0.8 : 0;
+  const discountAmount = originalAmount - (order?.amount || 0);
+
   return (
     <div className="min-h-screen bg-background px-4 py-8">
       <div className="mx-auto max-w-2xl">
@@ -131,12 +137,23 @@ export default function PaymentPage() {
 
           <div className="mb-6 rounded-xl bg-primary/10 p-6 text-center">
             <p className="text-sm mb-2">Amount to Pay</p>
+            <div className="mb-2">
+              <span className="text-lg text-gray-500 line-through">
+                ₦{originalAmount.toLocaleString()}
+              </span>
+              <span className="ml-2 text-sm font-bold text-green-600 bg-green-100 px-2 py-1 rounded">
+                20% OFF
+              </span>
+            </div>
             <button
               onClick={() => copyText(order!.amount.toString(), "Amount")}
               className="text-4xl font-bold text-primary"
             >
               ₦{order!.amount.toLocaleString()}
             </button>
+            <p className="text-sm text-green-600 mt-2">
+              You save ₦{discountAmount.toLocaleString()}
+            </p>
           </div>
 
           <div className="space-y-3 rounded-lg bg-gray-50 p-4">
