@@ -110,7 +110,6 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const isInCart = cart.some((item) => item.id === product.id);
 
-  // Calculate discounted price (20% off)
   const originalPrice =
     product.originalPrice || parseFloat(product.price.replace(/[₦,]/g, ""));
   const discountedPrice = originalPrice * 0.8;

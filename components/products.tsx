@@ -33,14 +33,6 @@
 //     price: "₦3,000",
 //     image: "/clear-glass-lip-gloss-luxury.jpg",
 //   },
-//   {
-//     id: 5,
-//     name: "Mauve Scrub",
-//     description:
-//       "This all-natural scrub removes dead skin while locking in moisture",
-//     price: "₦3,000",
-//     image: "/clear-glass-lip-gloss-luxury.jpg",
-//   },
 // ];
 
 // export default function Products() {
@@ -112,7 +104,7 @@ const products = [
     description: "Soft clear with subtle shimmer for an effortless glow",
     price: "₦4,500",
     originalPrice: 4500,
-    image: "/mauve-lip-gloss-tube-luxury.jpg",
+    image: "/mauve6.jpeg",
   },
   {
     id: 2,
@@ -120,7 +112,7 @@ const products = [
     description: "pink with velvety finish for timeless elegance",
     price: "₦4,500",
     originalPrice: 4500,
-    image: "/nude-lip-gloss-luxury-product.jpg",
+    image: "/mauve7.jpeg",
   },
   {
     id: 3,
@@ -128,7 +120,7 @@ const products = [
     description: "chocolate gloss with high-shine finish",
     price: "₦4,500",
     originalPrice: 4500,
-    image: "/clear-glass-lip-gloss-luxury.jpg",
+    image: "/mauve8.jpeg",
   },
   {
     id: 4,
@@ -137,21 +129,12 @@ const products = [
       "A rich, glossy balm that keeps your lips soft, smooth, and glow-ready all day.",
     price: "₦3,000",
     originalPrice: 3000,
-    image: "/clear-glass-lip-gloss-luxury.jpg",
-  },
-  {
-    id: 5,
-    name: "Mauve Scrub",
-    description:
-      "This all-natural scrub removes dead skin while locking in moisture",
-    price: "₦3,000",
-    originalPrice: 3000,
-    image: "/clear-glass-lip-gloss-luxury.jpg",
+    image: "/mauve6.jpeg",
   },
 ];
 
 export default function Products() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -162,7 +145,7 @@ export default function Products() {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (sectionRef.current) {
