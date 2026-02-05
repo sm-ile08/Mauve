@@ -17,7 +17,7 @@ export interface Product {
 
 export async function getProducts(): Promise<Product[]> {
   return client.fetch(
-    `*[_type == "product" && inStock == true] | order(_createdAt desc) {
+    `*[_type == "product" && inStock == true] | order(displayOrder asc, _createdAt desc) {
       _id,
       name,
       slug,

@@ -82,6 +82,14 @@ export default defineType({
       description: "Show on homepage as featured product",
     }),
     defineField({
+      name: "displayOrder",
+      title: "Display Order",
+      type: "number",
+      description: "Lower numbers appear first (1 = first, 2 = second, etc.)",
+      validation: (Rule) => Rule.integer().positive().min(1),
+      initialValue: 999,
+    }),
+    defineField({
       name: "shade",
       title: "Shade/Color",
       type: "string",
@@ -114,12 +122,13 @@ export default defineType({
       media: "image",
       price: "price",
       inStock: "inStock",
+      displayOrder: "displayOrder",
     },
     prepare(selection) {
-      const { title, media, price, inStock } = selection;
+      const { title, media, price, inStock, displayOrder } = selection;
       return {
         title,
-        subtitle: `₦${price?.toLocaleString() || 0} ${!inStock ? "(Out of Stock)" : ""}`,
+        subtitle: `#${displayOrder || "?"} - ₦${price?.toLocaleString() || 0} ${!inStock ? "(Out of Stock)" : ""}`,
         media,
       };
     },

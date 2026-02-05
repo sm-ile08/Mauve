@@ -44,7 +44,6 @@ export default function Products() {
       try {
         const sanityProducts = await getProducts();
 
-        // Transform Sanity products to match your existing ProductCard format
         const transformedProducts = sanityProducts.map(
           (product: SanityProduct) => ({
             id: product._id,
@@ -62,7 +61,6 @@ export default function Products() {
         setProducts(transformedProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
-        // Fallback to empty array if fetch fails
         setProducts([]);
       } finally {
         setLoading(false);
