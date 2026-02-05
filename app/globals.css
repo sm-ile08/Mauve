@@ -1,5 +1,6 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 @custom-variant dark (&:is(.dark *));
 
@@ -218,14 +219,6 @@ a {
 img {
   @apply transition-opacity duration-500;
 }
-
-/* img[loading="lazy"] {
-  @apply opacity-0;
-}
-
-img[loading="lazy"].loaded {
-  @apply opacity-100;
-} */
 
 @keyframes breathe {
   0%,
