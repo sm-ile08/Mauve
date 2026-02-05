@@ -2,45 +2,23 @@
 
 import { useEffect, useRef, useState } from "react";
 import ProductCard from "./product-card";
+import { getProducts } from "@/lib/queries";
+import { urlFor } from "@/lib/sanity";
 
-const products = [
-  {
-    id: 1,
-    name: "Glass Shine",
-    description: "Soft clear with subtle shimmer for an effortless glow",
-    price: "₦4,500",
-    originalPrice: 4500,
-    image: "/mauve6.jpeg",
-  },
-  {
-    id: 2,
-    name: "Soft Crush",
-    description: "pink with velvety finish for timeless elegance",
-    price: "₦4,500",
-    originalPrice: 4500,
-    image: "/mauve7.jpeg",
-  },
-  {
-    id: 3,
-    name: "Toffee Glow",
-    description: "Nude gloss with high-shine finish",
-    price: "₦4,500",
-    originalPrice: 4500,
-    image: "/mauve8.jpeg",
-  },
-  {
-    id: 4,
-    name: "Mauve Balm",
-    description:
-      "A rich, glossy balm that keeps your lips soft, smooth, and glow-ready all day.",
-    price: "₦3,000",
-    originalPrice: 3000,
-    image: "/mauvebalm.jpeg",
-  },
-];
+interface SanityProduct {
+  _id: string;
+  name: string;
+  price: number;
+  description?: string;
+  image: any;
+  shade?: string;
+  inStock: boolean;
+}
 
 export default function Products() {
   const [isVisible, setIsVisible] = useState(false);
+  const [products, setProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -59,6 +37,39 @@ export default function Products() {
     }
 
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const sanityProducts = await getProducts();
+
+        // Transform Sanity products to match your existing ProductCard format
+        const transformedProducts = sanityProducts.map(
+          (product: SanityProduct) => ({
+            id: product._id,
+            name: product.name,
+            description: product.description || "",
+            price: `₦${product.price.toLocaleString()}`,
+            originalPrice: product.price,
+            image: product.image
+              ? urlFor(product.image).width(500).height(500).url()
+              : "/placeholder.svg",
+            shade: product.shade,
+          }),
+        );
+
+        setProducts(transformedProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        // Fallback to empty array if fetch fails
+        setProducts([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProducts();
   }, []);
 
   return (
@@ -82,15 +93,30 @@ export default function Products() {
           </p>
         </div>
 
-        <div
-          className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 ${
-            isVisible ? "animate-stagger" : "opacity-0"
-          }`}
-        >
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        ) : products.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-xl text-gray-500">
+              No products available at the moment.
+            </p>
+            <p className="text-sm text-gray-400 mt-2">
+              Check back soon for new arrivals!
+            </p>
+          </div>
+        ) : (
+          <div
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 ${
+              isVisible ? "animate-stagger" : "opacity-0"
+            }`}
+          >
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
