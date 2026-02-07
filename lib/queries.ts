@@ -33,3 +33,43 @@ export async function getProducts(): Promise<Product[]> {
     }`,
   );
 }
+export interface DiscountCode {
+  _id: string;
+  code: string;
+  type: "percentage" | "fixed";
+  value: number;
+  active: boolean;
+  expiryDate?: string;
+  minimumOrderAmount?: number;
+  maxUses?: number;
+  currentUses: number;
+}
+
+export async function validateDiscountCode(
+  code: string,
+): Promise<DiscountCode | null> {
+  const now = new Date().toISOString();
+
+  const result = await client.fetch(
+    `*[_type == "discountCode" && code == $code && active == true][0] {
+      _id,
+      code,
+      type,
+      value,
+      active,
+      expiryDate,
+      minimumOrderAmount,
+      maxUses,
+      currentUses
+    }`,
+    { code: code.toUpperCase() },
+  );
+
+  if (!result) return null;
+
+  if (result.expiryDate && result.expiryDate < now) return null;
+
+  if (result.maxUses && result.currentUses >= result.maxUses) return null;
+
+  return result;
+}
