@@ -71,12 +71,20 @@ export default function Cart() {
 }
 
 export function CartPage() {
-  const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
+  const {
+    cart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    discountCode,
+    removeDiscountCode,
+    calculateDiscount,
+  } = useCart();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [location, setLocation] = useState("Akure");
+  const [location, setLocation] = useState("FUTA");
   const [showNameError, setShowNameError] = useState(false);
   const [showEmailError, setShowEmailError] = useState(false);
   const [showPhoneError, setShowPhoneError] = useState(false);
@@ -271,7 +279,8 @@ export function CartPage() {
 
   const productsTotal = calculateProductsTotal();
   const deliveryFee = getDeliveryFee();
-  const grandTotal = productsTotal + deliveryFee;
+  const discountAmount = calculateDiscount(productsTotal);
+  const grandTotal = productsTotal + deliveryFee - discountAmount;
 
   const handleWhatsAppOrder = () => {
     if (cart.length === 0) return;

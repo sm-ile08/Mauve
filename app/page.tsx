@@ -7,6 +7,7 @@ import Products from "@/components/products";
 import About from "@/components/about";
 import Testimonials from "@/components/testimonials";
 import Footer from "@/components/footer";
+import DiscountPopup from "@/components/discount-popup";
 // import WhatsAppButton from "@/components/whatsapp-button";
 
 export default function Home() {
@@ -29,6 +30,7 @@ export default function Home() {
       <About />
       <Testimonials />
       <Footer />
+      <DiscountPopup />
       {/* <WhatsAppButton /> */}
     </main>
   );

@@ -34,7 +34,7 @@ import { schema } from "./sanity/schemaTypes/index";
 export default defineConfig({
   name: "default",
   title: "Mauve Beauty",
-  basePath: "/studio",
+  basePath: "/admin/products",
 
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
